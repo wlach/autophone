@@ -17,15 +17,6 @@ class SmokeTest(PhoneTest):
         PhoneTest.__init__(self, phone_cfg, config_file, status_cb)
 
     def runjob(self, job):
-        try:
-            os.unlink('smoketest_pass')
-        except OSError:
-            pass
-        try:
-            os.unlink('smoketest_fail')
-        except OSError:
-            pass
-
         if 'androidprocname' not in job or \
                 'revision' not in job or 'blddate' not in job or \
                 'bldtype' not in job or 'version' not in job:
@@ -53,12 +44,13 @@ class SmokeTest(PhoneTest):
             sleep(3)
             fennec_launched = self.analyze_logcat(job)
 
+        phone_metadata_str = str(self.phone_cfg) + '\n'
         if fennec_launched:
             self.logger.info('fennec successfully launched')
-            file('smoketest_pass', 'w')
+            file('smoketest_pass', 'a').write(phone_metadata_str)
         else:
             self.logger.error('failed to launch fennec')
-            file('smoketest_fail', 'w')
+            file('smoketest_fail', 'a').write(phone_metadata_str)
 
         self.logger.debug('killing fennec')
         # Get rid of the browser and session store files
