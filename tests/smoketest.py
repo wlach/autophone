@@ -72,6 +72,9 @@ class SmokeTest(PhoneTest):
  
     def analyze_logcat(self, job):
         buf = self.dm.getLogcat()
+        if not buf:
+            return False
+
         got_start = False
         got_end = False
 
