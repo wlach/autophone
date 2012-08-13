@@ -80,9 +80,12 @@ class SmokeTest(PhoneTest):
         got_end = False
 
         for line in buf:
-            if not got_start and 'Start proc org.mozilla.fennec' in line:
+            if not got_start and ('Start proc org.mozilla.fennec' in line or
+                                  'Displayed org.mozilla.fennec/.App' in line):
+                self.logger.info('Found fennec start')
                 got_start = True
             if not got_end and 'Throbber stop' in line:
+                self.logger.info('Found fennec start end')
                 got_end = True
         return got_start and got_end
 
