@@ -73,6 +73,7 @@ class SmokeTest(PhoneTest):
     def analyze_logcat(self, job):
         buf = self.dm.getLogcat()
         if not buf:
+            self.logger.info('No logcat buffer')
             return False
 
         got_start = False
