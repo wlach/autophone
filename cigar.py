@@ -62,6 +62,7 @@ def run(args=sys.argv[1:]):
     except KeyboardInterrupt:
         print "Aborted. Killing autophone server."
         autophone_process.kill()
+        autophone_process.wait()
         sys.exit(1)
 
     retcode = 0
@@ -74,6 +75,7 @@ def run(args=sys.argv[1:]):
         print "Finished, everything succeeded. Yay!"
 
     autophone_process.kill()
+    autophone_process.wait()
 
     sys.exit(retcode)
 
